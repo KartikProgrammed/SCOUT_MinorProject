@@ -4,23 +4,28 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-public class MongoDBConnection {
-    public static void main(String[] args) {
+public class MongoDBUtilProperty {
+    private static MongoClient mongoClient;
+    private static MongoDatabase database;
+    private static MongoCollection<Document> propertyCollection;
+
+    // Static initializer block to establish a connection
+    static {
         String uri = "mongodb+srv://vv200325803:Cr5lNRcWVUUGyQud@cluster0.kzmm9.mongodb.net/";
-        try (MongoClient mongoClient = MongoClients.create(uri)) {
-            // Connect to a database (this won't create it yet)
-            MongoDatabase database = mongoClient.getDatabase("RealEstateDB");
+        mongoClient = MongoClients.create(uri); // Keep the client open
+        database = mongoClient.getDatabase("RealEstateDB");
+        propertyCollection = database.getCollection("Properties");
+    }
 
-            // Get a collection (this won't create it yet either)
-            MongoCollection<Document> collection = database.getCollection("Users");
+    // Get the property collection
+    public static MongoCollection<Document> getPropertyCollection() {
+        return propertyCollection;
+    }
 
-            // Create a new user (automatically assigns a UserID)
-            User newUser = User.createNewUser("John Doe", "john.doe@example.com", "securePassword123", false, collection);
-            boolean newUser2=User.authenticateUser("U001","securePassword123",collection);
-            System.out.println(newUser2);
-            //System.out.println("User created with ID: " + newUser.getUserId());
-        } catch (Exception e) {
-            e.printStackTrace();
+    // Close the MongoDB connection
+    public static void closeConnection() {
+        if (mongoClient != null) {
+            mongoClient.close();
         }
     }
 }

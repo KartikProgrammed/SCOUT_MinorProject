@@ -4,7 +4,7 @@ import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
-public class MongoDBUtil {
+public class MongoDBUtilUser {
     private static MongoClient mongoClient;
     private static MongoDatabase database;
     private static MongoCollection<Document> userCollection;

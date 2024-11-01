@@ -17,10 +17,10 @@ public class RealEstateApp {
                 // If the user has an account
                 System.out.println("Are you an Agent or a User? (agent/user)");
                 String userType = scanner.nextLine().trim().toLowerCase();
-
                 if (userType.equals("agent")) {
-                    if(Aauth(scanner)){
-                        agentMenu(scanner);
+                    String agentId = Aauth(scanner);
+                    if (agentId != null) {
+                        agentMenu(scanner, agentId);
                     }
                     else{
                         System.out.println("Invalid credentials entered!");
@@ -37,7 +37,6 @@ public class RealEstateApp {
                 else {
                     System.out.println("Invalid input! Please enter either 'agent' or 'user'.");
                 }
-
             }
             else if (hasAccount.equals("no")) {
                 // If the user is new
@@ -45,7 +44,6 @@ public class RealEstateApp {
                 System.out.println("1. Create an Account");
                 System.out.println("2. Exit");
                 String choice = scanner.nextLine().trim();
-
                 if (choice.equals("1")) {
                     System.out.println("Are you an Agent or a User? (agent/user)");
                     String userType = scanner.nextLine().trim().toLowerCase();
@@ -53,7 +51,6 @@ public class RealEstateApp {
                 } else {
                     running = false; // Exit the program
                 }
-
             }
             else {
                 System.out.println("Invalid input! Please enter 'yes' or 'no'.");
@@ -62,7 +59,7 @@ public class RealEstateApp {
         System.out.println("Thank you for using the Real Estate Application! Goodbye!");
         scanner.close();
     }
-    private static void createAccount(String userType) {
+    protected static void createAccount(String userType) {
         Scanner scanner = new Scanner(System.in);
         boolean isAgent = userType.equals("agent"); // Use equals for string comparison
 
@@ -75,7 +72,7 @@ public class RealEstateApp {
         String password = scanner.nextLine();
 
         // Access the collection using MongoDBUtil
-        MongoCollection<Document> collection = MongoDBUtil.getUserCollection();
+        MongoCollection<Document> collection = MongoDBUtilUser.getUserCollection();
 
         User newUser = User.createNewUser(username, email, password, isAgent, collection);
 
@@ -87,23 +84,24 @@ public class RealEstateApp {
         String id= scanner.nextLine();
         System.out.println("enter your password");
         String pswd=scanner.nextLine();
-        MongoCollection<Document> collection = MongoDBUtil.getUserCollection();
+        MongoCollection<Document> collection = MongoDBUtilUser.getUserCollection();
         boolean ret = User.authenticateUser(id, pswd, collection);
         return ret;
     }
-    private static boolean Aauth(Scanner scanner) {
+    private static String Aauth(Scanner scanner) {
         System.out.println("enter your Agent ID");
         String id= scanner.nextLine();
         System.out.println("enter your password");
         String pswd=scanner.nextLine();
-        MongoCollection<Document> collection = MongoDBUtil.getUserCollection();
-        return User.authenticateUser(id, pswd, collection);
+        MongoCollection<Document> collection = MongoDBUtilUser.getUserCollection();
+        boolean isAuthenticated = User.authenticateUser(id, pswd, collection);
+        return isAuthenticated ? id : null;
     }
-    private static void agentMenu(Scanner scanner) {
+    private static void agentMenu(Scanner scanner, String agentID) {
         boolean running = true;
         while (running) {
             System.out.println("Agent Menu:");
-            System.out.println("1. List Properties");
+            System.out.println("1. Search for a Properties");
             System.out.println("2. Add a Property");
             System.out.println("3. Update a Property");
             System.out.println("4. Delete a Property");
@@ -111,26 +109,25 @@ public class RealEstateApp {
             System.out.print("Choose an option: ");
             String choice = scanner.nextLine().trim();
             running=false;
-
-//            switch (choice) {
-//                case "1":
-//                    listProperties();
-//                    break;
-//                case "2":
-//                    addProperty(scanner);
-//                    break;
-//                case "3":
-//                    updateProperty(scanner);
-//                    break;
-//                case "4":
-//                    deleteProperty(scanner);
-//                    break;
-//                case "5":
-//                    running = false; // Log out
-//                    break;
-//                default:
-//                    System.out.println("Invalid option! Please try again.");
-//            }
+            switch (choice) {
+                case "1":
+                    PropertyManager.searchProperty();
+                    break;
+                case "2":
+                    PropertyManager.addProperty(scanner, agentID);
+                    break;
+                case "3":
+                    PropertyManager.updateProperty(scanner);
+                    break;
+                case "4":
+                    PropertyManager.deleteProperty(scanner);
+                    break;
+                case "5":
+                    running = false; // Log out
+                    break;
+                default:
+                    System.out.println("Invalid option! Please try again.");
+            }
         }
     }
     private static void customerMenu(Scanner scanner) {
