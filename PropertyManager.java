@@ -65,7 +65,7 @@ public class PropertyManager {
         System.out.println("Updating Property with ID: " + propertyId);
         System.out.print("Enter new Square Feet (or press Enter to keep " + property.squareFeet + "): ");
         String squareFeetInput = scanner.nextLine();
-        int squareFeet = squareFeetInput.isEmpty() ? property.squareFeet : Integer.parseInt(squareFeetInput);
+        double squareFeet = squareFeetInput.isEmpty() ? property.squareFeet : Integer.parseInt(squareFeetInput);
 
         System.out.print("Enter new Address (or press Enter to keep current address): ");
         String address = scanner.nextLine();

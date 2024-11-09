@@ -4,7 +4,7 @@ import com.mongodb.client.model.Filters;
 
 public class Property {
     protected String propertyId;
-    protected int squareFeet;
+    protected double squareFeet;
     protected String address;
     protected int bhkNumber;
     protected double latitude;
@@ -12,7 +12,7 @@ public class Property {
     protected double priceInLakhs;
     protected String agentId;
 
-    public Property(String propertyId, int squareFeet, String address, int bhkNumber, double latitude, double longitude, double priceInLakhs, String agentId) {
+    public Property(String propertyId, double squareFeet, String address, int bhkNumber, double latitude, double longitude, double priceInLakhs, String agentId) {
         this.propertyId = propertyId;
         this.squareFeet = squareFeet;
         this.address = address;
@@ -41,7 +41,7 @@ public class Property {
     }
 
     // Method to create a new property with auto-assigned ID and display the ID to the user
-    public static Property createNewProperty(int squareFeet, String address, int bhkNumber, double latitude, double longitude, double priceInLakhs, String agentId, MongoCollection<Document> collection) {
+    public static Property createNewProperty(double squareFeet, String address, int bhkNumber, double latitude, double longitude, double priceInLakhs, String agentId, MongoCollection<Document> collection) {
         String propertyId = generatePropertyId(collection);
         Property newProperty = new Property(propertyId, squareFeet, address, bhkNumber, latitude, longitude, priceInLakhs, agentId);
         collection.insertOne(newProperty.toDocument());
@@ -54,7 +54,7 @@ public class Property {
     // Generate a unique Property ID
     private static String generatePropertyId(MongoCollection<Document> collection) {
         String prefix = "P";
-        int idNumber = 1;
+        int idNumber = 2740;
         while (true) {
             String newPropertyId = prefix + String.format("%03d", idNumber); // e.g., P001, P002
             if (collection.find(Filters.eq("PropertyID", newPropertyId)).first() == null) {
@@ -80,7 +80,7 @@ public class Property {
         if (doc != null) {
             return new Property(
                     doc.getString("PropertyID"),
-                    doc.getInteger("SquareFeet"),
+                    doc.getDouble("SquareFeet"),
                     doc.getString("Address"),
                     doc.getInteger("BHKNumber"),
                     doc.getDouble("Latitude"),

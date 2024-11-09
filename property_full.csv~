@@ -1,4 +1,4 @@
-PropertyID,SquareFeet,Address,BHKNumber,Latitude,Longitude,PriceInLakhs,AgentID
+PropertyID,SquareFeet,Address,BHKNnumber,Latitude,Longitude,PriceInLakhs,AgentID
 P1,1300.236407,"Ksfc Layout,Bangalore",2,77.59796,12.96991,55,Anonymous_agent
 P2,1275,"Vishweshwara Nagar,Mysore",2,76.644605,12.274538,51,Anonymous_agent
 P3,933.1597222,"Jigani,Bangalore",2,77.632191,12.778033,43,Anonymous_agent

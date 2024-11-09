@@ -5,9 +5,9 @@ import com.mongodb.client.MongoDatabase;
 import org.bson.Document;
 
 public class MongoDBUtilProperty {
-    private static MongoClient mongoClient;
+    private static final MongoClient mongoClient;
     private static MongoDatabase database;
-    private static MongoCollection<Document> propertyCollection;
+    private static final MongoCollection<Document> propertyCollection;
 
     // Static initializer block to establish a connection
     static {
