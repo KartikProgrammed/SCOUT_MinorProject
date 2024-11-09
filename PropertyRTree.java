@@ -50,9 +50,9 @@ public class PropertyRTree {
 
     public static void main(String[] args) {
         PropertyRTree propertyRTree = new PropertyRTree();
-        propertyRTree.loadDataFromCSV("properties.csv");
+        propertyRTree.loadDataFromCSV("Properties.csv");
 
         // Query properties near a specific location
-        propertyRTree.queryNearbyProperties(77.59796, 12.96991, 1);
+        propertyRTree.queryNearbyProperties(77.59796, 12.96991, 0.1);
     }
 }
