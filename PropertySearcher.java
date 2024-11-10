@@ -14,7 +14,10 @@ public class PropertySearcher {
     }
 
     // Function to search properties based on address
-    public static void searchProperty(Scanner scanner) {
+    public static List<Property> searchProperty(Scanner scanner) {
+        // List to store the properties found near the given address
+        List<Property> foundProperties = new ArrayList<>();
+
         System.out.print("Enter the address you want to search for: ");
         String address = scanner.nextLine().trim();
 
@@ -29,7 +32,7 @@ public class PropertySearcher {
             System.out.println("[DEBUG] Coordinates found: Latitude = " + coordinates[0] + ", Longitude = " + coordinates[1]);
         } else {
             System.out.println("[DEBUG] Coordinates not found for address: " + address);
-            return; // Exit if coordinates are not found
+            return foundProperties; // Return empty list if coordinates are not found
         }
 
         double latitude = coordinates[0];
@@ -43,14 +46,12 @@ public class PropertySearcher {
         System.out.println("[DEBUG] Number of nearby properties found: " + nearbyPropertyIds.size());
         System.out.println("\n");
 
-        // Fetch property details from MongoDB and display them
+        // Fetch property details from MongoDB and add to the list
         if (!nearbyPropertyIds.isEmpty()) {
-            System.out.println("Found properties:");
             for (String propertyId : nearbyPropertyIds) {
-//                System.out.println("[DEBUG] Fetching property details for Property ID: " + propertyId);
                 Property property = Property.getPropertyById(propertyId, propertyCollection);
                 if (property != null) {
-                    System.out.println(propertyDetailsToString(property));
+                    foundProperties.add(property); // Add the property to the list
                 } else {
                     System.out.println("[DEBUG] Property not found for Property ID: " + propertyId);
                 }
@@ -58,7 +59,10 @@ public class PropertySearcher {
         } else {
             System.out.println("No properties found near the given location.");
         }
+
+        return foundProperties; // Return the list of found properties
     }
+
 
     // Helper function to display property details as a string
     public static String propertyDetailsToString(Property property) {

@@ -28,6 +28,14 @@ public class Property {
         return propertyId;
     }
 
+    public double getPriceInLakhs() {
+        return priceInLakhs;  // Getter for priceInLakhs
+    }
+
+    public int getBhkNumber() {
+        return bhkNumber;  // Getter for bhkNumber
+    }
+
     // Convert property details to MongoDB document format
     public Document toDocument() {
         return new Document("PropertyID", propertyId)
