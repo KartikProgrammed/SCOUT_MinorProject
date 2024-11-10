@@ -134,19 +134,20 @@ public class RealEstateApp {
             System.out.print("Choose an option: ");
             String choice = scanner.nextLine().trim();
 
-//            switch (choice) {
-//                case "1":
-//                    PropertyManager.searchProperty();
-//                    break;
-//                case "2":
-//                    PropertyManager.viewSavedProperties(scanner);
-//                    break;
-//                case "3":
-//                    running = false;  // Log out by breaking the loop
-//                    break;
-//                default:
-//                    System.out.println("Invalid option! Please try again.");
-//            }
+            switch (choice) {
+                case "1":
+                    // Call the PropertySearcher class to search for properties
+                    PropertySearcher.searchProperty(scanner);
+                    break;
+                case "2":
+                    System.out.println("Viewing saved properties is not yet implemented.");
+                    break;
+                case "3":
+                    running = false;  // Log out by breaking the loop
+                    break;
+                default:
+                    System.out.println("Invalid option! Please try again.");
+            }
         }
     }
 }

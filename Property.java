@@ -45,7 +45,6 @@ public class Property {
         String propertyId = generatePropertyId(collection);
         Property newProperty = new Property(propertyId, squareFeet, address, bhkNumber, latitude, longitude, priceInLakhs, agentId);
         collection.insertOne(newProperty.toDocument());
-
         System.out.println("New property created with ID: " + propertyId + " by Agent ID: " + agentId);
 
         return newProperty;
