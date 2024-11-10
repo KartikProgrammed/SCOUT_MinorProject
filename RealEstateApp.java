@@ -137,6 +137,7 @@ public class RealEstateApp {
             switch (choice) {
                 case "1":
                     // Call the PropertySearcher class to search for properties
+                    PropertySearcher.loadPropertyData();
                     PropertySearcher.searchProperty(scanner);
                     break;
                 case "2":

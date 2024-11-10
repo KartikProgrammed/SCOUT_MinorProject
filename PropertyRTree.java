@@ -55,39 +55,18 @@ public class PropertyRTree {
 
         // For each result, add the PID to the propertyIds list
         for (Entry<String, Point> entry : entries) {
-            System.out.println("Found PID: " + entry.value() + " at " + entry.geometry().y() + ", " + entry.geometry().x());
-            propertyIds.add(entry.value());
+            if(propertyIds.size()<10) {
+//                System.out.println("Found PID: " + entry.value() + " at " + entry.geometry().y() + ", " + entry.geometry().x());
+                propertyIds.add(entry.value());
+            }
+            else{
+                break;
+            }
         }
 
         // Return the collected property IDs
         return propertyIds;
     }
-//    public List<Double> searchProperty(Scanner scanner) {
-//        List<Double> LL = new ArrayList<>();
-//        System.out.print("Enter the address you want to search for: ");
-//        String address = scanner.nextLine().trim();
-//
-//        // Debug: print the address entered by the user
-//        System.out.println("[DEBUG] User entered address: " + address);
-//
-//        // Convert address to latitude and longitude
-//        double[] coordinates = API_init.getCoordinatesFromAddress(address);
-//
-//        // Debug: print the coordinates obtained from the address
-//        if (coordinates != null) {
-//            System.out.println("[DEBUG] Coordinates found: Latitude = " + coordinates[0] + ", Longitude = " + coordinates[1]);
-//        } else {
-//            System.out.println("[DEBUG] Coordinates not found for address: " + address);
-//            return LL; // Exit if coordinates are not found
-//        }
-//
-//        double latitude = coordinates[0];
-//        double longitude = coordinates[1];
-//        LL.add(latitude);
-//        LL.add(longitude);
-//        return LL;
-//
-//    }
         public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         PropertyRTree propertyRTree = new PropertyRTree();
@@ -95,7 +74,7 @@ public class PropertyRTree {
 //        propertyRTree.searchProperty(scanner);
 //            System.out.println(coordinates[1]);
         // Query properties near a specific location
-        propertyRTree.queryNearbyProperties(12, 77, 0.5);
+//        propertyRTree.queryNearbyProperties(76.644605, 12.274538, 0.1);
         scanner.close();
     }
 }

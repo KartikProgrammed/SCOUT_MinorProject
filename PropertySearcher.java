@@ -5,8 +5,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class PropertySearcher {
-    private static final PropertyRTree propertyRTree = new PropertyRTree();
-    private static final MongoCollection<Document> propertyCollection = MongoDBUtilProperty.getPropertyCollection();
+    public static final PropertyRTree propertyRTree = new PropertyRTree();
+    public static final MongoCollection<Document> propertyCollection = MongoDBUtilProperty.getPropertyCollection();
 
     // Load data from CSV into the R-tree
     public static void loadPropertyData() {
@@ -41,12 +41,13 @@ public class PropertySearcher {
 
         // Debug: print the number of properties found
         System.out.println("[DEBUG] Number of nearby properties found: " + nearbyPropertyIds.size());
+        System.out.println("\n");
 
         // Fetch property details from MongoDB and display them
         if (!nearbyPropertyIds.isEmpty()) {
             System.out.println("Found properties:");
             for (String propertyId : nearbyPropertyIds) {
-                System.out.println("[DEBUG] Fetching property details for Property ID: " + propertyId);
+//                System.out.println("[DEBUG] Fetching property details for Property ID: " + propertyId);
                 Property property = Property.getPropertyById(propertyId, propertyCollection);
                 if (property != null) {
                     System.out.println(propertyDetailsToString(property));
@@ -60,7 +61,7 @@ public class PropertySearcher {
     }
 
     // Helper function to display property details as a string
-    private static String propertyDetailsToString(Property property) {
+    public static String propertyDetailsToString(Property property) {
         return "Property ID: " + property.getPropertyId() +
                 "\nSquare Feet: " + property.squareFeet +
                 "\nAddress: " + property.address +
@@ -68,7 +69,8 @@ public class PropertySearcher {
                 "\nLatitude: " + property.latitude +
                 "\nLongitude: " + property.longitude +
                 "\nPrice in Lakhs: " + property.priceInLakhs +
-                "\nAgent ID: " + property.agentId;
+                "\nAgent ID: " + property.agentId +
+                "\n----------------------------\n";
     }
 
     public static void main(String[] args) {
