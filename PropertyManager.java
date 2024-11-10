@@ -36,10 +36,9 @@ public class PropertyManager {
         String address = scanner.nextLine();
         System.out.print("Enter BHK Number: ");
         int bhkNumber = Integer.parseInt(scanner.nextLine());
-        System.out.print("Enter Latitude: ");
-        double latitude = Double.parseDouble(scanner.nextLine());
-        System.out.print("Enter Longitude: ");
-        double longitude = Double.parseDouble(scanner.nextLine());
+        double[] coordinates = API_init.getCoordinatesFromAddress(address);
+        double latitude = coordinates[0];
+        double longitude = coordinates[1];
         System.out.print("Enter Price (in Lakhs): ");
         double priceInLakhs = Double.parseDouble(scanner.nextLine());
 
@@ -70,18 +69,13 @@ public class PropertyManager {
         System.out.print("Enter new Address (or press Enter to keep current address): ");
         String address = scanner.nextLine();
         address = address.isEmpty() ? property.address : address;
+        double[] coordinates = API_init.getCoordinatesFromAddress(address);
+        double latitude=coordinates[0];
+        double longitude=coordinates[1];
 
         System.out.print("Enter new BHK Number (or press Enter to keep " + property.bhkNumber + "): ");
         String bhkInput = scanner.nextLine();
         int bhkNumber = bhkInput.isEmpty() ? property.bhkNumber : Integer.parseInt(bhkInput);
-
-        System.out.print("Enter new Latitude (or press Enter to keep " + property.latitude + "): ");
-        String latInput = scanner.nextLine();
-        double latitude = latInput.isEmpty() ? property.latitude : Double.parseDouble(latInput);
-
-        System.out.print("Enter new Longitude (or press Enter to keep " + property.longitude + "): ");
-        String longInput = scanner.nextLine();
-        double longitude = longInput.isEmpty() ? property.longitude : Double.parseDouble(longInput);
 
         System.out.print("Enter new Price in Lakhs (or press Enter to keep " + property.priceInLakhs + "): ");
         String priceInput = scanner.nextLine();
