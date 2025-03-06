@@ -7,9 +7,13 @@ public class API_init {
 
     private static JOpenCageGeocoder jOpenCageGeocoder;
 
-    // Initialize API with the API key
+    // Initialize API with the API key from environment variable
     static {
-        jOpenCageGeocoder = new JOpenCageGeocoder("6949a36a3eff442e9f84d446977218ec");
+        String apiKey = System.getenv("OPENCAGE_API_KEY");
+        if (apiKey == null || apiKey.isEmpty()) {
+            throw new IllegalStateException("API key not found in environment variables.");
+        }
+        jOpenCageGeocoder = new JOpenCageGeocoder(apiKey);
     }
 
     // Method to get coordinates (latitude, longitude) from address
